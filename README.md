@@ -52,7 +52,7 @@ supported.  In this method, Vim expects a syntax file like "rholang.vim" to be i
 directory called "~/.vim/syntax" to define the syntax, and a different "rholang.vim" in
 "~/.vim/ftdetect" to inform Vim that highlighting for ".rho" files exists.
 
-Thus, to install this support (I can't bring myself to call this a "plugin", copy the files
+Thus, to install this support (I can't bring myself to call this a "plugin"), copy the files
 found in these directories into the respective directories in your "~/.vim" directory, and
 you should be good to go!
 
