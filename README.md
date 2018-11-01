@@ -39,3 +39,4 @@ Elsewhere:
 * [Sublime Text](https://github.com/tgrospic/rholang-sublime)
 * [Visual Studio Code](https://github.com/tgrospic/rholang-vscode)
 * [IDEA/WebStorm/PHPStorm](https://github.com/tgrospic/rholang-idea)
+* [Atom](https://atom.io/packages/language-rholang)
