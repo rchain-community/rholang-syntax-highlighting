@@ -8,7 +8,7 @@ if exists("b:current_syntax")
 endif
 
 " Rholang Keywords
-syn keyword rholangLanguageKeywords contract for in match new select case
+syn keyword rholangLanguageKeywords contract for in if else match new select case bundle bundle0 bundle+ bundle-
 
 syn keyword rholangToDo contained TODO FIXME XXX NOTE
 
@@ -18,8 +18,13 @@ syn match rholangLineComment "//.*" contains=rholangToDo
 "syn region rholangFold start="{" end="}" transparent fold
 
 " Rholang strings (taken from Java Strings)
-syn match rholangSpecialChar contained "\\\([4-9]\d\|[0-3]\d\d|[\"\\'ntbrf]\|u\x\{4\}\)"
-syn region rholangString start=+"+ end=+"+ contains=rholangSpeclialChar
+syn match rholangStringSpecialChar contained "\\\([4-9]\d\|[0-3]\d\d\|[\"\\'ntbrf]\|u\x\{4\}\)"
+syn region rholangString start=+"+ end=+"+ contains=rholangStringSpecialChar
+
+" Rholang URIs
+syn match rholangURISpecialChar contained "\\\([4-9]\d\|[0-3]\d\d\|[`\\'ntbrf]\|u\x\{4\}\)"
+syn region rholangURI start=+`+ end=+`+ contains=rholangURISpecialChar
+
 
 " Rholang numbers -- shamelessly stolen from Java numbers
 " (and may be subject to change...)
@@ -30,7 +35,7 @@ syn match rholangNumber          "\<\d\(\d\|_\d\)*\([eE][-+]\=\d\(\d\|_\d\)*\)\=
 
 
 " Special Rholang values
-syn match rholangValue 'Nil\|true\|false'
+syn match rholangValue 'Nil\|true\|false\|Bool\|Int\|String\|Uri\|ByteArray'
 
 " Rholang operators
 """ Theoretically I'd like the entire channel highlighed.  It seems to me
@@ -42,7 +47,7 @@ syn match rholangValue 'Nil\|true\|false'
 syn match rholangChannel  '@'
 
 syn match rholangOperator '+\|-\|\*\|/[^/]\|==\|='
-syn match rholangOperator '!\||\|<-\|<=\|=>\|_'
+syn match rholangOperator '!\||\|<-\|<=\|=>\|_\|\<not\>\|\<and\>\|\<or\>\|\.\.\.'
 
 syn match rholangBracket '(\|\[\|{\|}\|\]\|)'
 
@@ -53,6 +58,7 @@ hi def link rholangLineComment        Comment
 
 hi def link rholangNumber             Number
 hi def link rholangString             Constant
+hi def link rholangURI                Constant
 
 hi def link rholangOperator           Operator
 hi def link rholangChannel            Function

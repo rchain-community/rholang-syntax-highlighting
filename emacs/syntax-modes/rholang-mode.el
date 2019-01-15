@@ -18,13 +18,14 @@
 
 (defconst rholang-font-lock-keywords-1
   (list
-   `(,(regexp-opt '("contract" "for" "in" "match" "new" "select" "case") 'words) . font-lock-builtin-face)
+   `(,(regexp-opt '("contract" "for" "in" "if" "else" "match" "new" "select" "case") 'symbols) . font-lock-builtin-face)
    '("\\('\\w*\\)" . font-lock-variable-name-face))
   "Minimal highlighting expressions for Rholang mode")
 
 (defconst rholang-font-lock-keywords-2
   (append rholang-font-lock-keywords-1
-	  (list '("\\<\\(true\\|false\\|Nil\\)\\>" . font-lock-constant-face)))
+    (list
+	  `(,(regexp-opt '("true" "false" "Nil" "Bool" "Int" "String" "Uri" "ByteArray") 'symbols) . font-lock-constant-face)))
   "Additional keywords to highlight in Rholang mode")
 
 ;;;; Colorize tokens and brackets
@@ -36,7 +37,8 @@
 (defconst rholang-font-lock-keywords-3
   (append rholang-font-lock-keywords-2
 	  (list
-	   `(,(regexp-opt '("@" "|" "!" "<-" "<=" "=>" "=" "+" "-" "*" "/") t) . font-lock-keyword-face)
+	   `(,(regexp-opt '("and" "or" "not" "bundle" "bundle0" "bundle+" "bundle-") 'symbols) . font-lock-keyword-face)
+	   `(,(regexp-opt '("@" "|" "!" "<-" "<=" "=>" "=" "+" "-" "*" "/" "...") t) . font-lock-keyword-face)
 	   `(,(regexp-opt '("{" "[" "(" ")" "]" "}") t) . font-lock-comment-delimiter-face)))
   "Additional keywords to highlight operators and brackets in Rholang mode")
 
@@ -49,15 +51,19 @@
 
 
 (defvar rholang-mode-syntax-table
-  (let ((st (make-syntax-table)))
-    (modify-syntax-entry ?_ "w" st)    ; for Emacs to consider underscored_words as a single word
+  (let ((rholang-syntax-table (make-syntax-table)))
+      ;; Consider underscored_word as a single word.
+      (modify-syntax-entry ?_ "w" rholang-syntax-table)
 
-    ;; Enable comments -- going full C++ style is probably going overboard; to the best of
-    ;; my knowledge, Rholang only uses // style comments...
-    (modify-syntax-entry ?/  ". 124b" st) ; enable C++ style commenst // (1b) and /* (24)
-    (modify-syntax-entry ?*  ". 23"   st) ; enable C++ style comments /* (23)
-    (modify-syntax-entry ?\n "> b"    st) ; \n ends "b-style" commenst (for //)
-    st)
+      ;; Enable comments -- going full C++ style is probably going overboard; to the best of
+      ;; my knowledge, Rholang only uses // style comments...
+      (modify-syntax-entry ?/  ". 124b" rholang-syntax-table) ; enable C++ style comments // (1b) and /* (24)
+      (modify-syntax-entry ?*  ". 23"   rholang-syntax-table) ; enable C++ style comments /* (23)
+      (modify-syntax-entry ?\n "> b"    rholang-syntax-table) ; \n ends "b-style" comments (for //)
+
+      ;; Recognize `uri strings` as strings.  Emacs automatically handles "\\" and "\`".
+      (modify-syntax-entry ?` "\"" rholang-syntax-table)
+    rholang-syntax-table)
   "Syntax table for Rholang mode")
 
 
