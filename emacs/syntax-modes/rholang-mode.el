@@ -15,6 +15,7 @@
   "Keymap for Rholang major mode")
 
 (add-to-list 'auto-mode-alist '("\\.rho\\'" . rholang-mode))
+(add-to-list 'auto-mode-alist '("\\.rhox\\'" . rholang-mode))
 
 (defconst rholang-font-lock-keywords-1
   (list
